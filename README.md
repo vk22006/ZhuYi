@@ -1,42 +1,8 @@
-# sv
+# 逐一 （OneThing中国环境是配的版本）
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+> 一款专注与提高效率的应用程序，让我帮助我的事情。
 
-## Creating a project
+欢迎来到**逐一**！是我开发的**OneThing**的中国版。
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```sh
-# create a new project
-npx sv create my-app
-```
-
-To recreate this project with the same configuration:
-
-```sh
-# recreate this project
-npx sv create --template minimal --types jsdoc --add prettier tailwindcss="plugins:typography,forms" --install npm ZhuYi
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## 关于我的项目
+  这是一个个人实验项目，用于探索在中国网络环境下的软件设计与离线优先架构。
