@@ -1,6 +1,9 @@
-# 逐一 （OneThing中国环境适配的版本）
+![Logo for ZhuYi](assets/header-dark.png) 
 
-> 一款专注与提高效率的应用程序，让我帮助我的事情。
+![GitHub top language](https://img.shields.io/github/languages/top/vk22006/OneThing)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+---
 
 欢迎来到**逐一**！是我开发的**OneThing**的中国版。
 
