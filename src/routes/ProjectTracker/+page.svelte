@@ -1,22 +1,52 @@
 <script lang="ts">
     import Header from '../Header.svelte';
-    import { Alert } from "flowbite-svelte";
-    // // import Sidebar from './sidebar.svelte';
-    // import { fly, fade } from "svelte/transition";
-    // import { onMount } from "svelte";
+    import { Sidebar, SidebarGroup, SidebarItem, SidebarButton, uiHelpers } from "flowbite-svelte";
+    import { page } from "$app/stores";
 
-    let page = $state('你的项目');
+    let title = $state('你的项目');
+
+    let activeUrl = $derived($page.url.pathname);
+    // import PlusPlaceholder from "$utils/PlusPlaceholder.svelte";
+    const spanClass = "flex-1 ms-3 whitespace-nowrap";
+    const demoSidebarUi = uiHelpers();
+    let isDemoOpen = $state(false);
+    const closeDemoSidebar = demoSidebarUi.close;
+    $effect(() => {
+        isDemoOpen = demoSidebarUi.isOpen;
+    });
 </script>
 
-<Header {page} />
 
-<div class="p-8">
-  <Alert>
-    <span class="font-medium">Info alert!</span>
-    Change a few things up and try submitting again.
-  </Alert>
+<div class="flex">
+<SidebarButton onclick={demoSidebarUi.toggle} class="mb-2" />
+  <Sidebar
+    {activeUrl}
+    backdrop={false}
+    isOpen={isDemoOpen}
+    closeSidebar={closeDemoSidebar}
+    params={{ x: -50, duration: 50 }}
+    class="z-50 h-full"
+    position="absolute"
+    classes={{ nonactive: "p-2", active: "p-2" }}
+  >
+    <SidebarGroup>
+
+      <SidebarItem label="TODO清单" href="/">
+      </SidebarItem>
+
+      <SidebarItem label="你的项目" href="/ProjectTracker">
+      </SidebarItem>
+
+      <SidebarItem label="进步" href="/ProgressDashboard">
+      </SidebarItem>
+
+      <SidebarItem label="设置" href="/Settings">
+      </SidebarItem>
+
+    </SidebarGroup>
+  </Sidebar>
+
+  <main class="flex-1 p-6">
+    <Header {title}/>
+  </main>
 </div>
-
-<a href="./ProjectTracker">你的项目</a><br>
-<a href="./ProgressDashboard">进步</a><br>
-<a href="./Settings">设置</a><br>
