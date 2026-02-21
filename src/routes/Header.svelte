@@ -1,9 +1,9 @@
 <script lang="ts">
-    let { page } = $props();
+    let { title } = $props();
 </script>
 
 <div class="p-6">
-<h1>{page}</h1>
+<h1>{title}</h1>
 </div>
 
 <style>
