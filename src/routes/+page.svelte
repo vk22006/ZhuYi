@@ -19,12 +19,6 @@
 
 
 <div class="flex">
-
- <Banner class="absolute">
-        <p class="me-8 flex items-center text-sm font-normal text-gray-500 md:me-0 dark:text-gray-400">
-            <span>您现在看的是逐一的最新版本</span>
-        </p>
-    </Banner>
     <SidebarButton onclick={demoSidebarUi.toggle} class="mb-2" />
   <Sidebar
     {activeUrl}
@@ -54,6 +48,11 @@
   </Sidebar>
 
   <main class="flex-1 p-6">
+    <Banner class="absolute">
+        <p class="me-8 flex items-center text-sm font-normal text-gray-500 md:me-0 dark:text-gray-400">
+            <span>您现在看的是逐一的最新版本</span>
+        </p>
+    </Banner>
     <Header {title}/>
   </main>
 </div>
