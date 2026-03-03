@@ -17,7 +17,6 @@
 - **Implemented:** 基础项目结构、主题与样式 (`src/routes/layout.css`)。:contentReference[oaicite:5]{index=5}  
 - **WIP / TODO:** Progress Dashboard、Project Tracker、Settings 页面需要实现（文件已存在但尚为空）。
 
----
 
 ## Features（短期目标）
 
@@ -27,7 +26,6 @@
 - 导入/导出、同步（后续）
 - 桌面封装（Tauri / Electron）
 
----
 
 ## 技术栈
 
@@ -36,7 +34,6 @@
 - **Tools:** Node, npm.  
 - **Scripts:** `dev`, `build`, `preview`（见 `package.json`）.
 
----
 
 ## 快速开始
 
@@ -64,7 +61,6 @@
 * `src/routes/Settings/` — Settings 页面（待实现）。
 * `src/routes/layout.css` — Tailwind / theme / flowbite 相关配置（颜色 & 插件）。
 
----
 
 ## Roadmap（短期里程碑）
 
@@ -74,7 +70,6 @@
 4. 导入/导出（CSV / JSON）
 5. 打包成桌面应用（Tauri）
 
----
 
 ## 如何贡献（Contributing）
 
@@ -83,19 +78,16 @@
 3. 提交 PR，说明变更与测试步骤。
 4. 遵守 Prettier 格式（仓库已配置）。
 
----
 
 ## 截图
 
 (在 `assets/` 加入更多截图或 GIF；如果已部署请放置 demo 链接。) 
 
----
 
 ## 许可证
 
 本项目采用 MIT 许可证。详见 [LICENSE](LICENSE)。
 
----
 
 ## 联系
 
