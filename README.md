@@ -48,7 +48,9 @@
 
 3. 启动开发服务器
 
-    ```npm run dev```
+    ```bash
+    npm run dev
+    ```
 
 4. 打开浏览器访问`http://localhost:5173`（或终端输出的地址）。
 （如果需要同步SvelteKit配置：`npm run prepare`）.
