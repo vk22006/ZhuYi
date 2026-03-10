@@ -14,7 +14,7 @@
 ## 项目现状（Project status）
 
 - **Scaffold & UI theme:** SvelteKit + Tailwind + Flowbite 已配置（landing 页面文本可见）。  
-- **Implemented:** 基础项目结构、主题与样式 (`src/routes/layout.css`)。:contentReference[oaicite:5]{index=5}  
+- **Implemented:** 基础项目结构、主题与样式 (`src/routes/layout.css`)。  
 - **WIP / TODO:** Progress Dashboard、Project Tracker、Settings 页面需要实现（文件已存在但尚为空）。
 
 
