@@ -24,7 +24,7 @@
 - 任务进度面板（Progress Dashboard）
 - 项目追踪器（Project Tracker）
 - 导入/导出、同步（后续）
-- 桌面封装（Tauri / Electron）
+- 桌面封装（Tauri）
 
 
 ## 技术栈
@@ -67,10 +67,10 @@
 ## Roadmap（短期里程碑）
 
 1. 基本 Dashboard 界面与导航（已建页面框架） ✅
-2. 本地数据模型 + IndexedDB 持久化
-3. 离线优先 & 同步接口设计
-4. 导入/导出（CSV / JSON）
-5. 打包成桌面应用（Tauri）
+2. 打包成桌面应用（Tauri）
+3. 本地数据模型 + IndexedDB 持久化
+4. 离线优先 & 同步接口设计
+5. 导入/导出（CSV / JSON）
 
 
 ## 如何贡献（Contributing）
