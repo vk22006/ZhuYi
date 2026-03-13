@@ -11,7 +11,8 @@
 	// import PlusPlaceholder from "$utils/PlusPlaceholder.svelte";
 	const spanClass = 'flex-1 ms-3 whitespace-nowrap';
 	const demoSidebarUi = uiHelpers();
-	let isDemoOpen = $state(false);
+	demoSidebarUi.isOpen = true;
+	let isDemoOpen = $state(true);
 	const closeDemoSidebar = demoSidebarUi.close;
 	$effect(() => {
 		isDemoOpen = demoSidebarUi.isOpen;
@@ -61,16 +62,13 @@
 </script>
 
 <div class="relative flex min-h-screen">
-	<div class="absolute top-4 left-4 z-50">
-		<SidebarButton onclick={demoSidebarUi.toggle} />
-	</div>
 	<Sidebar
 		{activeUrl}
 		backdrop={false}
 		isOpen={isDemoOpen}
 		closeSidebar={closeDemoSidebar}
 		params={{ x: -50, duration: 50 }}
-		class="z-50 h-full"
+		class="z-50 h-full {isDemoOpen ? '' : 'md:!-translate-x-full'}"
 		position="absolute"
 		classes={{ nonactive: 'p-2', active: 'p-2' }}
 	>
@@ -86,6 +84,12 @@
 	</Sidebar>
 
 	<main class="flex-1 p-6 transition-all duration-300 {isDemoOpen ? 'ml-64' : ''}">
+		<div class="mb-4 flex items-center gap-4">
+			<SidebarButton
+				onclick={demoSidebarUi.toggle}
+				class="!inline-flex rounded-lg p-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
+			/>
+		</div>
 		<Banner class="absolute">
 			<p
 				class="me-8 flex items-center text-sm font-normal text-gray-500 md:me-0 dark:text-gray-400"
