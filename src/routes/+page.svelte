@@ -60,8 +60,10 @@
 	}
 </script>
 
-<div class="flex">
-	<SidebarButton onclick={demoSidebarUi.toggle} class="mb-2" />
+<div class="relative flex min-h-screen">
+	<div class="absolute top-4 left-4 z-50">
+		<SidebarButton onclick={demoSidebarUi.toggle} />
+	</div>
 	<Sidebar
 		{activeUrl}
 		backdrop={false}
@@ -83,7 +85,7 @@
 		</SidebarGroup>
 	</Sidebar>
 
-	<main class="flex-1 p-6">
+	<main class="flex-1 p-6 transition-all duration-300 {isDemoOpen ? 'ml-64' : ''}">
 		<Banner class="absolute">
 			<p
 				class="me-8 flex items-center text-sm font-normal text-gray-500 md:me-0 dark:text-gray-400"
@@ -97,12 +99,11 @@
 		>
 			<!-- Header / Counters -->
 			<div class="mb-6 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-				<h2 class="text-xl font-semibold text-gray-900 dark:text-white">Todo List</h2>
+				<!-- <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Todo List</h2> -->
 				<div class="flex gap-4">
-					<span>Total: <strong>{totalTasks}</strong></span>
+					<span>总数: <strong>{totalTasks}</strong></span>
 					<span
-						>Remaining: <strong class="text-blue-600 dark:text-blue-400">{remainingTasks}</strong
-						></span
+						>剩余: <strong class="text-blue-600 dark:text-blue-400">{remainingTasks}</strong></span
 					>
 				</div>
 			</div>
@@ -115,21 +116,21 @@
 				<input
 					type="text"
 					bind:value={newTitle}
-					placeholder="Task title (required)"
+					placeholder="任务标题（必填）"
 					required
 					class="w-full rounded-lg border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
 				/>
 				<input
 					type="text"
 					bind:value={newDescription}
-					placeholder="Description (optional)"
+					placeholder="任务说明（可选）"
 					class="w-full rounded-lg border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
 				/>
 				<button
 					type="submit"
 					class="w-full rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800"
 				>
-					Add Task
+					添加任务
 				</button>
 			</form>
 
@@ -171,13 +172,13 @@
 										<button
 											onclick={saveEdit}
 											class="rounded-md bg-green-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-green-700"
-											>Save</button
+											>保存</button
 										>
 										<button
 											type="button"
 											onclick={cancelEdit}
 											class="rounded-md bg-gray-500 px-3 py-1.5 text-xs font-medium text-white hover:bg-gray-600"
-											>Cancel</button
+											>取消</button
 										>
 									</div>
 								</div>
@@ -210,13 +211,13 @@
 									onclick={() => startEdit(todo)}
 									class="text-sm font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
 								>
-									Edit
+									编辑
 								</button>
 								<button
 									onclick={() => todosStore.remove(todo.id)}
 									class="text-sm font-medium text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
 								>
-									Delete
+									删除
 								</button>
 							</div>
 						{/if}
@@ -227,7 +228,7 @@
 					<li
 						class="rounded-lg border-2 border-dashed border-gray-200 py-6 text-center text-gray-500 dark:border-gray-700 dark:text-gray-400"
 					>
-						No tasks yet. Create one above!
+						无任务。请在上面创建一下！
 					</li>
 				{/if}
 			</ul>
