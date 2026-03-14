@@ -11,13 +11,13 @@
 
 ## 目前功能（已/在做）
 
-* 待办列表（Todo）—— 增、删、改、查，支持本地保存。
-* 进度看板（Progress Dashboard）—— 页面框架已建，内容正在开发。
-* 项目追踪（Project Tracker）—— 页面结构已放好，业务逻辑待实现。
+* 待办列表（Todo）—— 增、删、改、查，支持本地持久化保存。
+* 项目追踪（Project Tracker）—— 支持多项目管理、设定截止时间提醒、内置轻量笔记，数据基于 `localStorage` 本地保存。
+* 进度看板（Progress Dashboard）—— 提供项目状态统计、整体进度条可视化、临近截止提醒以及数据一键导出为 CSV 格式。
 * 设置页面（Settings）—— 页面已建，选项待补充。
-* 离线优先设计（目标）—— 计划使用 IndexedDB / localForage 实现本地持久化和离线体验。
+* 离线优先设计（目标）—— 计划使用 IndexedDB 实现本地持久化和增强的离线体验。
 * 桌面打包（目标）—— 计划用 Tauri 打包成桌面应用。
-* 导入 / 导出（后续）—— 支持 JSON/CSV 的导入导出计划中。
+* 导入 / 导出（在做）—— 已支持将项目数据单向导出为 CSV，计划后续完善完整的 JSON/CSV 导入导出。
 
 ## 技术栈
 
@@ -47,16 +47,14 @@ npm run dev
 ## 项目现状（短句）
 
 * UI 框架和主题已搭好（SvelteKit + Tailwind + Flowbite）。
-* 页面框架：主页、Progress Dashboard、Project Tracker、Settings 都已创建。
-* 核心功能（如 Todo 的持久化、Dashboard 逻辑、项目数据模型）还在实现中。
+* 核心功能逐步齐备：主页 Todo 列表、Project Tracker 项目追踪以及 Progress Dashboard 进度统计系统，都已实现完整的界面逻辑并由本地存储驱动。
 
 ## 短期计划（下一个里程碑）
 
-1. 把 Todo 的 CRUD 与本地持久化稳定好（MVP）。
-2. 完成 Progress Dashboard 的基础视图和数据展示。
-3. 为数据添加 IndexedDB 支持，实现离线优先。
-4. 加入简单测试与 CI（Vitest + GitHub Actions）。
-5. 部署一个在线 Demo（Vercel / Netlify），并在 README 加 Demo 链接。
+1. 完善 Settings 页面选项。
+2. 为数据层添加 IndexedDB 支持，由目前的 localStorage 转向更稳固的离线优先架构。
+3. 加入简单测试与 CI（Vitest + GitHub Actions）。
+4. 部署一个在线 Demo（Vercel / Netlify），并在 README 加 Demo 链接。
 
 ## 如何贡献
 
