@@ -1,4 +1,4 @@
-![Logo for ZhuYi](assets/header-dark.png) 
+![ZhuYi Title Banner](assets/header-dark.png) 
 
 ![GitHub top language](https://img.shields.io/github/languages/top/vk22006/OneThing)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
