@@ -37,7 +37,18 @@
   input[type="search"]::-webkit-search-cancel-button {
     display: none;
   }
+
+  /* Root dark-mode background — must be here because Tailwind's dark variant
+     can't target html/body via utility classes on those elements directly    */
+  html, body {
+    @apply bg-white text-gray-900;
+  }
+  html.dark, html.dark body {
+    background-color: #111827; /* gray-900 */
+    color: #f9fafb;            /* gray-50  */
+  }
 }
+
 
 /* Font-size scale classes applied to <body> by settingsStore */
 body.font-small  { font-size: 13px; }
