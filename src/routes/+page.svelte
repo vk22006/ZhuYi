@@ -83,7 +83,11 @@
 		</SidebarGroup>
 	</Sidebar>
 
-	<main class="flex-1 p-6 transition-all duration-300 {isDemoOpen ? 'ml-64' : ''}">
+	<main
+		class="flex-1 p-6 transition-all duration-300 {isDemoOpen
+			? 'ml-64'
+			: ''} bg-gray-50 dark:bg-gray-900"
+	>
 		<div class="mb-4 flex items-center gap-4">
 			<SidebarButton
 				onclick={demoSidebarUi.toggle}
