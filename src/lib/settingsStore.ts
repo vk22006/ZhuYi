@@ -39,9 +39,9 @@ export function applySettings(settings: Settings) {
     // Theme: toggle "dark" class on <html>
     document.documentElement.classList.toggle('dark', settings.theme === 'dark');
 
-    // Font size: set a class on <body>
-    document.body.classList.remove('font-small', 'font-medium', 'font-large');
-    document.body.classList.add(`font-${settings.fontSize}`);
+    // Font size: set a class on <html> so rem-based Tailwind utilities scale
+    document.documentElement.classList.remove('font-small', 'font-medium', 'font-large');
+    document.documentElement.classList.add(`font-${settings.fontSize}`);
 }
 
 function createSettingsStore() {

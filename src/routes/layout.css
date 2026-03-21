@@ -47,10 +47,14 @@
     background-color: #111827; /* gray-900 */
     color: #f9fafb;            /* gray-50  */
   }
+
+  /* Font size baseline — must live on html so rem-based utilities scale */
+  html { font-size: 16px; }
 }
 
 
-/* Font-size scale classes applied to <body> by settingsStore */
-body.font-small  { font-size: 13px; }
-body.font-medium { font-size: 16px; }
-body.font-large  { font-size: 19px; }
+/* Font-size scale classes applied to <html> by settingsStore.
+   Using html (not body) so all rem-based Tailwind text utilities scale. */
+html.font-small  { font-size: 13px; }
+html.font-medium { font-size: 16px; }
+html.font-large  { font-size: 19px; }
