@@ -59,7 +59,17 @@ function createTodoStore() {
     },
     toggle: (id: string | number) => {
       update(todos => {
-        const updated = todos.map(t => (t.id === id ? { ...t, done: !t.done } : t));
+        const updated = todos.map(t => {
+          if (t.id !== id) return t;
+          const toggled = { ...t, done: !t.done };
+          // Fire a desktop notification only when transitioning to "done"
+          if (toggled.done && browser) {
+            import('$lib/notifications').then(({ notifyTaskComplete }) => {
+              notifyTaskComplete(toggled.title);
+            });
+          }
+          return toggled;
+        });
         return saveAndReturn(updated);
       });
     },
