@@ -24,3 +24,4 @@ vite.config.ts.timestamp-*
 
 # Tauri – Rust build output
 src-tauri/target/
+src-tauri/error.log
