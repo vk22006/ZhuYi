@@ -9,22 +9,36 @@
 
 逐一（ZhuYi）是 OneThing 的中文实验版。它是一个小型的生产力工具，目标是帮助我记录任务、跟踪项目和查看进度，支持离线优先，未来计划打包成桌面应用。
 
-## 目前功能（已/在做）
+## 目前功能 (Features)
 
-* 待办列表（Todo）—— 增、删、改、查，支持本地持久化保存。
-* 项目追踪（Project Tracker）—— 支持多项目管理、设定截止时间提醒、内置轻量笔记，数据基于 `localStorage` 本地保存。
-* 进度看板（Progress Dashboard）—— 提供项目状态统计、整体进度条可视化、临近截止提醒以及数据一键导出为 CSV 格式。
-* 设置页面（Settings）—— 页面已建，选项待补充。
-* 离线优先设计（目标）—— 计划使用 IndexedDB 实现本地持久化和增强的离线体验。
-* 桌面打包（目标）—— 计划用 Tauri 打包成桌面应用。
-* 导入 / 导出（在做）—— 已支持将项目数据单向导出为 CSV，计划后续完善完整的 JSON/CSV 导入导出。
+- ✅ **待办列表 (Todo)** —— 增、删、改、查，支持本地持久化保存。
+- ✅ **桌面原生通知** —— 基于 Tauri v2 实现的桌面级通知，当你完成任务或新建项目时会弹出系统提醒。
+- ✅ **项目追踪 (Project Tracker)** —— 支持多项目管理、设定截止时间、内置轻量笔记，数据基于 `localStorage` 本地安全保存。
+- ✅ **进度看板 (Progress Dashboard)** —— 直观的项目状态统计、整体进度条可视化、临近到期提醒，支持将数据一键导出为 CSV 格式。
+- ⬜ **导入/导出** —— 已支持单向导出为主流 CSV 格式，计划后续增加完整的 JSON/CSV 数据导入恢复。
+- ⬜ **数据存储升级** —— 目前为离线优先的本地存储版本，计划后续引入 IndexedDB 支持。
+- ⬜ **专属设置页** —— 提供基本配置的基础版本，更多自定义选项正在补充完善中。
+
+![Main screen (initial version)](assets/main_page.gif)
 
 ## 技术栈
 
 * 前端：SvelteKit + Vite
 * 样式：Tailwind CSS + Flowbite（flowbite-svelte）
 * 本地存储：localStorage / IndexedDB（后续）
-* 打包（目标）：Tauri（桌面）
+* 桌面应用：Tauri v2 + Rust（支持 Windows 安装包）
+
+## 颜色主题
+
+目前有两种颜色主题可供选择，具体如下：
+
+1. 深色主题
+
+![Dark theme](assets/dark_theme.png)
+
+2. 浅色主题
+
+![Light theme](assets/light_theme.png)
 
 ## 快速开始（本地运行）
 
@@ -48,6 +62,7 @@ npm run dev
 
 * UI 框架和主题已搭好（SvelteKit + Tailwind + Flowbite）。
 * 核心功能逐步齐备：主页 Todo 列表、Project Tracker 项目追踪以及 Progress Dashboard 进度统计系统，都已实现完整的界面逻辑并由本地存储驱动。
+* **v1.0.0 已正式发布！** 现在它是一个完整的桌面应用，能够在你完成任务时发送 Windows 桌面通知。
 
 ## 短期计划（下一个里程碑）
 
