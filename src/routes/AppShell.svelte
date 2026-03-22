@@ -27,7 +27,7 @@
 </script>
 
 <!-- Full-viewport shell — never scrolls at the document level -->
-<div class="flex h-screen overflow-hidden bg-gray-50 dark:bg-gray-900">
+<div class="flex h-dvh overflow-clip bg-gray-50 dark:bg-gray-900">
 	<!-- ── Sidebar ─────────────────────────────────────────────────────────── -->
 	<aside
 		class="flex h-full flex-shrink-0 flex-col border-r border-gray-200 bg-white transition-all duration-200 dark:border-gray-700 dark:bg-gray-800
@@ -51,7 +51,7 @@
 	</aside>
 
 	<!-- ── Main content ───────────────────────────────────────────────────── -->
-	<div class="flex min-w-0 flex-1 flex-col overflow-hidden">
+	<div class="flex min-w-0 flex-1 flex-col overflow-clip relative z-50">
 		<!-- Top bar: sidebar toggle -->
 		<header
 			class="flex h-11 flex-shrink-0 items-center border-b border-gray-200 bg-white px-3 dark:border-gray-700 dark:bg-gray-800"

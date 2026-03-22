@@ -131,6 +131,11 @@ function createProjectStore() {
                     createdAt: now(),
                     updatedAt: now()
                 };
+                if (browser) {
+                    import('$lib/notifications').then(({ notifyActionConfirmed }) => {
+                        notifyActionConfirmed(`新项目 "${project.title}" 已创建！`);
+                    });
+                }
                 return saveAndReturn([...projects, project]);
             });
         },
@@ -194,15 +199,22 @@ function createProjectStore() {
         toggleStatus(projectId: string) {
             update((projects) =>
                 saveAndReturn(
-                    projects.map((p) =>
-                        p.id === projectId
-                            ? {
-                                ...p,
-                                status: p.status === 'completed' ? 'active' : 'completed',
-                                updatedAt: now()
-                            }
-                            : p
-                    )
+                    projects.map((p) => {
+                        if (p.id !== projectId) return p;
+                        const newStatus = p.status === 'completed' ? 'active' : 'completed';
+                        
+                        if (newStatus === 'completed' && browser) {
+                            import('$lib/notifications').then(({ notifyActionConfirmed }) => {
+                                notifyActionConfirmed(`🎉 项目 "${p.title}" 已完成！`);
+                            });
+                        }
+                        
+                        return {
+                            ...p,
+                            status: newStatus,
+                            updatedAt: now()
+                        };
+                    })
                 )
             );
         }

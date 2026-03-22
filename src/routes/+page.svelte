@@ -3,6 +3,7 @@
 	import Header from './Header.svelte';
 	import { page } from '$app/stores';
 	import { todosStore } from '$lib/todoStore';
+	import { initNotifications } from '$lib/notifications';
 
 	let title = $state('天天TODO清单');
 	let activeUrl = $derived($page.url.pathname);
