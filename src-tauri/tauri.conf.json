@@ -1,6 +1,6 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "逐一",
+  "productName": "ZhuYi",
   "version": "1.0.0",
   "identifier": "com.vk22006.zhuyi",
   "build": {
