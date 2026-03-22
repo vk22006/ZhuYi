@@ -22,10 +22,22 @@ cd ZhuYi
 npm install
 ```
 
-4. 运行开发服务器
+4. 运行网页开发服务器
 
 ```bash
 npm run dev
+```
+
+5. 运行桌面应用 (Tauri) 服务器
+
+```bash
+npm run tauri:dev
+```
+
+6. 打包桌面应用安装程序
+
+```bash
+npm run tauri:build
 ```
 
 ## 提交代码流程
@@ -124,7 +136,7 @@ Issue 可以包括：
 * Todo 管理
 * 项目进度跟踪
 * 离线优先应用
-* 未来支持桌面版本
+* 桌面版本（v1.0.0 已发布，将持续优化）
 
 ---
 
