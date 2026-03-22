@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "ZhuYi",
-  "version": "0.1.0",
+  "productName": "逐一",
+  "version": "1.0.0",
   "identifier": "com.vk22006.zhuyi",
   "build": {
     "frontendDist": "../build",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "ZhuYi",
+        "title": "逐一",
         "width": 1024,
         "height": 720,
         "minWidth": 768,
@@ -29,12 +29,11 @@
     "active": true,
     "targets": "all",
     "icon": [
-      "icons/32x32.png",
-      "icons/128x128.png",
-      "icons/128x128@2x.png",
-      "icons/icon.icns",
-      "icons/icon.ico"
+      "icons/logo_32x32.png",
+      "icons/logo_128x128.png",
+      "icons/logo_128x128@2x.png",
+      "icons/logo.icns",
+      "icons/logo.ico"
     ]
   }
 }
-
