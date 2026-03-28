@@ -3,12 +3,15 @@
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import { settingsStore } from '$lib/settingsStore';
+	import { migrateFromLocalStorage } from '$lib/db';
 
 	let { children } = $props();
 
-	onMount(() => {
-		// Apply persisted settings to the DOM on every page navigation / hard refresh
-		settingsStore.init();
+	onMount(async () => {
+		// One-time migration of any existing localStorage data into IndexedDB
+		await migrateFromLocalStorage();
+		// Load settings from IndexedDB and apply to the DOM
+		await settingsStore.init();
 	});
 </script>
 

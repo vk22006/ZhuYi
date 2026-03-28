@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
+import { dbGetAll, dbPut, dbDelete } from '$lib/db';
 
 export interface Todo {
   id: string | number;
@@ -9,74 +10,76 @@ export interface Todo {
   createdAt: string;
 }
 
-const STORAGE_KEY = 'zhuyi:tasks';
+// ─── Store ────────────────────────────────────────────────────────────────────
 
 function createTodoStore() {
   const { subscribe, set, update } = writable<Todo[]>([]);
 
-  // Safely initialize from localStorage only when running in the browser
+  // Hydrate from IndexedDB (async – fires after store is usable)
   if (browser) {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        set(JSON.parse(stored));
-      } catch (e) {
-        console.error('Failed to parse todos from localStorage', e);
-      }
-    }
-  }
-
-  // Helper to save to localStorage and return the state
-  function saveAndReturn(todos: Todo[]) {
-    if (browser) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
-    }
-    return todos;
+    dbGetAll<Todo>('todos').then((todos) => {
+      // Sort by createdAt ascending so order is stable after reload
+      set(todos.sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1)));
+    }).catch((err) => {
+      console.error('[todoStore] Failed to load from IndexedDB', err);
+    });
   }
 
   return {
     subscribe,
+
+    /** Replace the entire list (persists each item). */
     set: (todos: Todo[]) => {
-      set(saveAndReturn(todos));
+      set(todos);
+      if (browser) {
+        // Persist all items; deletions are handled by individual remove()
+        todos.forEach((t) => dbPut('todos', t));
+      }
     },
+
     add: (todo: Omit<Todo, 'id' | 'createdAt' | 'done'>) => {
-      update(todos => {
+      update((todos) => {
         const newTodo: Todo = {
           ...todo,
-          // Generate a simple unique ID
           id: browser && window.crypto ? crypto.randomUUID() : Date.now().toString(),
           done: false,
           createdAt: new Date().toISOString()
         };
-        return saveAndReturn([...todos, newTodo]);
+        if (browser) dbPut('todos', newTodo);
+        return [...todos, newTodo];
       });
     },
+
     update: (id: string | number, changes: Partial<Omit<Todo, 'id' | 'createdAt'>>) => {
-      update(todos => {
-        const updated = todos.map(t => (t.id === id ? { ...t, ...changes } : t));
-        return saveAndReturn(updated);
+      update((todos) => {
+        const updated = todos.map((t) => (t.id === id ? { ...t, ...changes } : t));
+        const changed = updated.find((t) => t.id === id);
+        if (browser && changed) dbPut('todos', changed);
+        return updated;
       });
     },
+
     toggle: (id: string | number) => {
-      update(todos => {
-        const updated = todos.map(t => {
+      update((todos) => {
+        const updated = todos.map((t) => {
           if (t.id !== id) return t;
           const toggled = { ...t, done: !t.done };
-          // Fire a desktop notification only when transitioning to "done"
           if (toggled.done && browser) {
             import('$lib/notifications').then(({ notifyTaskComplete }) => {
               notifyTaskComplete(toggled.title);
             });
           }
+          if (browser) dbPut('todos', toggled);
           return toggled;
         });
-        return saveAndReturn(updated);
+        return updated;
       });
     },
+
     remove: (id: string | number) => {
-      update(todos => {
-        const updated = todos.filter(t => t.id !== id);
-        return saveAndReturn(updated);
+      update((todos) => {
+        if (browser) dbDelete('todos', id as IDBValidKey);
+        return todos.filter((t) => t.id !== id);
       });
     }
   };
