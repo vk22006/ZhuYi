@@ -57,7 +57,7 @@
 		<div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
 			<div class="flex gap-4">
 				<span>总数: <strong>{totalTasks}</strong></span>
-				<span>剩余: <strong class="text-blue-600 dark:text-blue-400">{remainingTasks}</strong></span>
+				<span>剩余: <strong class="text-primary-600 dark:text-primary-400">{remainingTasks}</strong></span>
 			</div>
 		</div>
 
@@ -71,17 +71,17 @@
 				bind:value={newTitle}
 				placeholder="任务标题（必填）"
 				required
-				class="w-full rounded-lg border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+				class="w-full rounded-lg border-gray-300 px-4 py-2 text-sm focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
 			/>
 			<input
 				type="text"
 				bind:value={newDescription}
 				placeholder="任务说明（可选）"
-				class="w-full rounded-lg border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+				class="w-full rounded-lg border-gray-300 px-4 py-2 text-sm focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
 			/>
 			<button
 				type="submit"
-				class="w-full rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800"
+				class="w-full rounded-lg bg-primary-600 px-4 py-2 font-medium text-white transition-colors hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-800"
 			>
 				添加任务
 			</button>
@@ -101,7 +101,7 @@
 							type="checkbox"
 							checked={todo.done}
 							onchange={() => todosStore.toggle(todo.id)}
-							class="h-5 w-5 cursor-pointer rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+							class="h-5 w-5 cursor-pointer rounded border-gray-300 bg-gray-100 text-primary-600 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600"
 						/>
 					</div>
 
@@ -162,7 +162,7 @@
 						<div class="flex items-center gap-3">
 							<button
 								onclick={() => startEdit(todo)}
-								class="text-sm font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+								class="text-sm font-medium text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300"
 							>
 								编辑
 							</button>
