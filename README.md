@@ -2,82 +2,74 @@
 
 ![GitHub top language](https://img.shields.io/github/languages/top/vk22006/OneThing)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+![Version](https://img.shields.io/badge/version-v1.1.0-orange.svg)
 
 ---
 
-欢迎来到**逐一**!
+欢迎来到**逐一** (ZhuYi)!
 
-逐一（ZhuYi）是 OneThing 的中文实验版。它是一个小型的生产力工具，目标是帮助我记录任务、跟踪项目和查看进度，支持离线优先，未来计划打包成桌面应用。
+逐一（ZhuYi）是一个现代、极简的个人生产力工具。它的目标是帮助你通过清晰的任务管理、项目追踪和数据可视化来掌控你的每一天。支持离线优先架构，并已打包为跨平台桌面应用。
 
-## 目前功能 (Features)
+## 核心功能 (Core Features)
 
-- ✅ **待办列表 (Todo)** —— 增、删、改、查，支持本地持久化保存。
-- ✅ **桌面原生通知** —— 基于 Tauri v2 实现的桌面级通知，当你完成任务或新建项目时会弹出系统提醒。
-- ✅ **项目追踪 (Project Tracker)** —— 支持多项目管理、设定截止时间、内置轻量笔记，数据基于 `localStorage` 本地安全保存。
-- ✅ **进度看板 (Progress Dashboard)** —— 直观的项目状态统计、整体进度条可视化、临近到期提醒，支持将数据一键导出为 CSV 格式。
-- ⬜ **导入/导出** —— 已支持单向导出为主流 CSV 格式，计划后续增加完整的 JSON/CSV 数据导入恢复。
-- ⬜ **数据存储升级** —— 目前为离线优先的本地存储版本，计划后续引入 IndexedDB 支持。
-- ✅ **专属设置页** —— 提供基本配置的基础版本，更多自定义选项正在补充完善中。
+- ✅ **待办列表 (Todo)** —— 极简交互，支持任务的增删改查及状态切换。
+- ✅ **数据存储升级 (IndexedDB)** —— **[NEW]** 成功从 `localStorage` 迁移至 `IndexedDB`，提供更稳固、海量的本地离线数据支持。
+- ✅ **项目追踪 (Project Tracker)** —— 多项目并行管理、设定截止时间、内置轻量笔记系统。
+- ✅ **进度看板 (Dashboard)** —— 直观的项目状态统计、整体进度可视化、临近到期预警，支持 CSV 数据导出。
+- ✅ **UI 重塑与图标 (Vibrant UI)** —— **[NEW]** 全新红橙色系主题，全面集成 **Flowbite SVG** 图标库，视觉体验更专业。
+- ✅ **桌面原生通知** —— 基于 Tauri v2 实现，任务完成或项目更新时实时弹出系统提醒。
+- ✅ **专属设置页** —— 支持外观主题切换、字体大小调节及数据迁移重置。
 
-![Main screen (initial version)](assets/main_page.gif)
+![Main screen (v1.1.0)](assets/main_page.gif)
 
-## 技术栈
+## 技术栈 (Tech Stack)
 
-* 前端：SvelteKit + Vite
-* 样式：Tailwind CSS + Flowbite（flowbite-svelte）
-* 本地存储：localStorage / IndexedDB（后续）
-* 桌面应用：Tauri v2 + Rust（支持 Windows 安装包）
+* **框架**: SvelteKit 5 + Vite 7
+* **样式**: Tailwind CSS 4 + Flowbite (flowbite-svelte)
+* **存储**: IndexedDB (基于异步架构的离线优先存储)
+* **桌面**: Tauri v2 + Rust (支持 Windows 原生安装包)
+* **图标**: Flowbite Svelte Icons
 
-## 颜色主题
+## 界面预览
 
-目前有两种颜色主题可供选择，具体如下：
+目前支持深色模式（默认）和浅色模式，采用全新的红橙色系（Primary Red-Orange）：
 
-1. 深色主题
-
+1. **深色主题 (Dark Mode)**
 ![Dark theme](assets/dark_theme.png)
 
-2. 浅色主题
-
+2. **浅色主题 (Light Mode)**
 ![Light theme](assets/light_theme.png)
 
-## 快速开始（本地运行）
+## 快速开始
 
-1. 克隆仓库
+1. **克隆仓库**
+   ```bash
+   git clone https://github.com/vk22006/ZhuYi.git
+   cd ZhuYi
+   ```
 
-```bash
-git clone https://github.com/vk22006/ZhuYi.git
-cd ZhuYi
-```
+2. **安装依赖并运行**
+   ```bash
+   npm install
+   npm run tauri:dev
+   ```
 
-2. 安装依赖并运行开发服务器
+3. **构建安装包**
+   ```bash
+   npm run tauri:build
+   ```
 
-```bash
-npm install
-npm run dev
-```
+## 项目现状 & 版本说明
 
-3. 打开浏览器访问 `http://localhost:5173`（或终端显示的地址）
+* **v1.1.0 (Current)**: 实现了从存储层到表现层的全面升级。引入了 IndexedDB 大容量存储，重绘了 UI 视觉稿，并完成了全量图标的 SVG 化。
+* **v1.0.0**: 初始稳定版，确立了 Todo/Project/Dashboard 三大核心模块及桌面通知功能。
 
-## 项目现状（短句）
+## 未来开发计划
 
-* UI 框架和主题已搭好（SvelteKit + Tailwind + Flowbite）。
-* 核心功能逐步齐备：主页 Todo 列表、Project Tracker 项目追踪以及 Progress Dashboard 进度统计系统，都已实现完整的界面逻辑并由本地存储驱动。
-* **v1.0.0 已正式发布！** 现在它是一个完整的桌面应用，能够在你完成任务时发送 Windows 桌面通知。
+1. ⬜ **导入功能**: 增加对 JSON/CSV 格式的数据导入支持。
+2. ⬜ **云端同步**: 计划支持 WebDAV 或第三方云存储同步。
+3. ⬜ **高级看板**: 增加甘特图或更复杂的周/月度进度报告。
+4. ⬜ **CI/CD 自动化**: 集成 GitHub Actions 自动构建多平台安装包。
 
-## 短期计划（下一个里程碑）
-
-1. 完善 Settings 页面选项。
-2. 为数据层添加 IndexedDB 支持，由目前的 localStorage 转向更稳固的离线优先架构。
-3. 加入简单测试与 CI（Vitest + GitHub Actions）。
-4. 部署一个在线 Demo（Vercel / Netlify），并在 README 加 Demo 链接。
-
-## 如何贡献
-
-* 提 issue 或 PR，说明变更点和测试步骤。
-* 分支命名示例：`feature/<短描述>` 或 `fix/<短描述>`。
-* 保持代码格式（仓库有 Prettier 配置）。
-
-## 许可证与联系方式
-
-* 许可证：MIT。
-* 作者：vk22006 — 欢迎提 issue 或 PR。
+---
+*版权所有 © 2026 vk22006 — 欢迎提 issue 或 PR 共同完善项目。*
