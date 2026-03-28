@@ -10,6 +10,19 @@
 		getStats,
 		type Project
 	} from '$lib/projectStore';
+	import {
+		ClipboardOutline,
+		AnnotationOutline,
+		CloseOutline,
+		CheckOutline,
+		RefreshOutline,
+		PlusOutline,
+		EditOutline,
+		TrashBinOutline,
+		ChevronUpOutline,
+		ChevronDownOutline,
+		ClockOutline
+	} from 'flowbite-svelte-icons';
 
 	let activeUrl = $derived($page.url.pathname);
 
@@ -146,9 +159,10 @@
 				text: 'DUE SOON · ' + formatDeadline(p.deadline),
 				cls: 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400'
 			};
+		// Normal deadline: use neutral colors to avoid confusion with primary (red-orange)
 		return {
 			text: formatDeadline(p.deadline),
-			cls: 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
+			cls: 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
 		};
 	}
 </script>
@@ -160,7 +174,7 @@
 		<!-- Stats bar -->
 		<div class="flex flex-wrap gap-3">
 			<span class="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700 dark:bg-gray-700 dark:text-gray-300">总数 <strong>{stats.total}</strong></span>
-			<span class="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700 dark:bg-blue-900/40 dark:text-blue-400">进行中 <strong>{stats.active}</strong></span>
+			<span class="rounded-full bg-primary-100 px-3 py-1 text-sm font-medium text-primary-700 dark:bg-primary-900/40 dark:text-primary-400">进行中 <strong>{stats.active}</strong></span>
 			<span class="rounded-full bg-red-100 px-3 py-1 text-sm font-medium text-red-700 dark:bg-red-900/40 dark:text-red-400">已过期 <strong>{stats.overdue}</strong></span>
 			<span class="rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-700 dark:bg-amber-900/40 dark:text-amber-400">即将到期 <strong>{stats.dueSoon}</strong></span>
 			<span class="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-700 dark:bg-green-900/40 dark:text-green-400">已完成 <strong>{stats.completed}</strong></span>
@@ -177,7 +191,7 @@
 			<div class="flex flex-col gap-3">
 				<div>
 					<label for="new-title" class="mb-1 block text-xs font-medium text-gray-600 dark:text-gray-400">
-						项目标题 <span class="text-red-500">*</span>
+						项目标题 <span class="text-primary-500">*</span>
 					</label>
 					<input
 						id="new-title"
@@ -185,7 +199,7 @@
 						bind:value={newTitle}
 						placeholder="比如：毕业设计"
 						required
-						class="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:focus:ring-blue-800"
+						class="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-200 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:focus:ring-primary-800"
 					/>
 				</div>
 				<div class="flex gap-3">
@@ -196,7 +210,7 @@
 							type="text"
 							bind:value={newDesc}
 							placeholder="简要描述项目目标"
-							class="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:focus:ring-blue-800"
+							class="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-200 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:focus:ring-primary-800"
 						/>
 					</div>
 					<div>
@@ -205,15 +219,15 @@
 							id="new-deadline"
 							type="datetime-local"
 							bind:value={newDeadline}
-							class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:focus:ring-blue-800"
+							class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-200 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:focus:ring-primary-800"
 						/>
 					</div>
 				</div>
 				<button
 					type="submit"
-					class="w-full rounded-lg bg-blue-600 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800"
+					class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary-600 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 focus:outline-none dark:focus:ring-primary-800"
 				>
-					＋ 添加项目
+					<PlusOutline class="h-4 w-4" /> 添加项目
 				</button>
 			</div>
 		</form>
@@ -225,7 +239,7 @@
 					<button
 						onclick={() => (filter = f)}
 						class="rounded-md px-3 py-1.5 text-xs font-medium transition-colors {filter === f
-							? 'bg-blue-600 text-white shadow-sm'
+							? 'bg-primary-600 text-white shadow-sm'
 							: 'text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700'}"
 					>
 						{f === 'all' ? '全部' : f === 'active' ? '进行中' : f === 'completed' ? '已完成' : '已过期'}
@@ -236,14 +250,19 @@
 				onclick={() => (sortAsc = !sortAsc)}
 				class="flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700"
 			>
-				{sortAsc ? '↑' : '↓'} 截止时间
+				{#if sortAsc}
+					<ChevronUpOutline class="h-3.5 w-3.5" />
+				{:else}
+					<ChevronDownOutline class="h-3.5 w-3.5" />
+				{/if}
+				截止时间
 			</button>
 		</div>
 
 		<!-- Project card list -->
 		{#if displayProjects.length === 0}
 			<div class="rounded-xl border-2 border-dashed border-gray-200 py-14 text-center text-gray-400 dark:border-gray-700">
-				<p class="text-2xl">📋</p>
+				<ClipboardOutline class="mx-auto h-10 w-10 text-gray-300 dark:text-gray-600" />
 				<p class="mt-2 text-sm">没有项目。在上面创建一个吧！</p>
 			</div>
 		{:else}
@@ -273,8 +292,8 @@
 											<input type="text" bind:value={editTitle} required class="w-full rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white" placeholder="项目标题" onkeydown={(e) => e.key === 'Enter' && saveEdit(project)} />
 											<input type="text" bind:value={editDesc} class="w-full rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white" placeholder="描述（可选）" onkeydown={(e) => e.key === 'Enter' && saveEdit(project)} />
 											<div class="flex gap-2">
-												<button onclick={(e) => { e.stopPropagation(); saveEdit(project); }} class="rounded-md bg-green-600 px-3 py-1 text-xs font-medium text-white hover:bg-green-700">保存</button>
-												<button onclick={(e) => { e.stopPropagation(); editingId = null; }} class="rounded-md bg-gray-400 px-3 py-1 text-xs font-medium text-white hover:bg-gray-500">取消</button>
+												<button onclick={(e) => { e.stopPropagation(); saveEdit(project); }} class="flex items-center gap-1 rounded-md bg-green-600 px-3 py-1 text-xs font-medium text-white hover:bg-green-700"><CheckOutline class="h-3 w-3" /> 保存</button>
+												<button onclick={(e) => { e.stopPropagation(); editingId = null; }} class="flex items-center gap-1 rounded-md bg-gray-400 px-3 py-1 text-xs font-medium text-white hover:bg-gray-500"><CloseOutline class="h-3 w-3" /> 取消</button>
 											</div>
 										</div>
 									{:else}
@@ -295,7 +314,9 @@
 											<span class="rounded-full px-2 py-0.5 text-xs font-semibold {label.cls}">{label.text}</span>
 										{/if}
 										{#if project.notes.length > 0}
-											<span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-500 dark:bg-gray-700 dark:text-gray-400">📝 {project.notes.length}</span>
+											<span class="flex items-center gap-1 rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-500 dark:bg-gray-700 dark:text-gray-400">
+												<AnnotationOutline class="h-3 w-3" /> {project.notes.length}
+											</span>
 										{/if}
 									</div>
 								{/if}
@@ -304,12 +325,22 @@
 							<!-- Action buttons row -->
 							{#if !isEditing}
 								<div class="mt-3 flex flex-wrap gap-2" onclick={(e) => e.stopPropagation()} role="presentation">
-									<button onclick={(e) => { e.stopPropagation(); startEdit(project); expandedId = project.id; }} class="rounded-md border border-gray-200 px-2.5 py-1 text-xs font-medium text-gray-600 hover:border-blue-400 hover:text-blue-600 dark:border-gray-600 dark:text-gray-400 dark:hover:border-blue-500 dark:hover:text-blue-400">编辑</button>
-									<button onclick={(e) => { e.stopPropagation(); toggleExpand(project.id); initDeadlineInput(project); }} class="rounded-md border border-gray-200 px-2.5 py-1 text-xs font-medium text-gray-600 hover:border-blue-400 hover:text-blue-600 dark:border-gray-600 dark:text-gray-400 dark:hover:border-blue-500 dark:hover:text-blue-400">📝 笔记</button>
-									<button onclick={(e) => { e.stopPropagation(); projectStore.toggleStatus(project.id); }} class="rounded-md border px-2.5 py-1 text-xs font-medium transition-colors {project.status === 'completed' ? 'border-green-300 text-green-600 hover:border-green-400 hover:bg-green-50 dark:border-green-700 dark:text-green-400' : 'border-gray-200 text-gray-600 hover:border-green-400 hover:text-green-600 dark:border-gray-600 dark:text-gray-400 dark:hover:border-green-500 dark:hover:text-green-400'}">
-										{project.status === 'completed' ? '↺ 重新开始' : '✓ 完成'}
+									<button onclick={(e) => { e.stopPropagation(); startEdit(project); expandedId = project.id; }} class="flex items-center gap-1 rounded-md border border-gray-200 px-2.5 py-1 text-xs font-medium text-gray-600 hover:border-primary-400 hover:text-primary-600 dark:border-gray-600 dark:text-gray-400 dark:hover:border-primary-500 dark:hover:text-primary-400">
+										<EditOutline class="h-3 w-3" /> 编辑
 									</button>
-									<button onclick={(e) => { e.stopPropagation(); deleteProject(project.id); }} class="rounded-md border border-gray-200 px-2.5 py-1 text-xs font-medium text-red-500 hover:border-red-400 hover:bg-red-50 dark:border-gray-600 dark:text-red-400 dark:hover:border-red-500">删除</button>
+									<button onclick={(e) => { e.stopPropagation(); toggleExpand(project.id); initDeadlineInput(project); }} class="flex items-center gap-1 rounded-md border border-gray-200 px-2.5 py-1 text-xs font-medium text-gray-600 hover:border-primary-400 hover:text-primary-600 dark:border-gray-600 dark:text-gray-400 dark:hover:border-primary-500 dark:hover:text-primary-400">
+										<AnnotationOutline class="h-3 w-3" /> 笔记
+									</button>
+									<button onclick={(e) => { e.stopPropagation(); projectStore.toggleStatus(project.id); }} class="flex items-center gap-1 rounded-md border px-2.5 py-1 text-xs font-medium transition-colors {project.status === 'completed' ? 'border-green-300 text-green-600 hover:border-green-400 hover:bg-green-50 dark:border-green-700 dark:text-green-400' : 'border-gray-200 text-gray-600 hover:border-green-400 hover:text-green-600 dark:border-gray-600 dark:text-gray-400 dark:hover:border-green-500 dark:hover:text-green-400'}">
+										{#if project.status === 'completed'}
+											<RefreshOutline class="h-3 w-3" /> 重新开始
+										{:else}
+											<CheckOutline class="h-3 w-3" /> 完成
+										{/if}
+									</button>
+									<button onclick={(e) => { e.stopPropagation(); deleteProject(project.id); }} class="flex items-center gap-1 rounded-md border border-gray-200 px-2.5 py-1 text-xs font-medium text-gray-500 hover:border-red-400 hover:bg-red-50 hover:text-red-600 dark:border-gray-600 dark:text-gray-400 dark:hover:border-red-500 dark:hover:text-red-400">
+										<TrashBinOutline class="h-3 w-3" /> 删除
+									</button>
 								</div>
 							{/if}
 						</div>
@@ -323,22 +354,26 @@
 
 								<!-- Deadline editor -->
 								<div class="mb-4 rounded-lg bg-gray-50 p-3 dark:bg-gray-900">
-									<p class="mb-2 text-xs font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400">截止时间</p>
+									<p class="mb-2 flex items-center gap-1.5 text-xs font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400">
+										<ClockOutline class="h-3.5 w-3.5" /> 截止时间
+									</p>
 									<div class="flex flex-wrap items-center gap-2">
-										<input type="datetime-local" bind:value={deadlineInputs[project.id]} class="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white" />
-										<button onclick={() => applyDeadline(project)} class="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700">更新</button>
+										<input type="datetime-local" bind:value={deadlineInputs[project.id]} class="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-200 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white" />
+										<button onclick={() => applyDeadline(project)} class="rounded-lg bg-primary-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-primary-700">更新</button>
 										{#if project.deadline}
-											<button onclick={() => { projectStore.setDeadline(project.id, null); deadlineInputs[project.id] = ''; }} class="rounded-lg border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-500 hover:border-red-300 hover:text-red-500 dark:border-gray-600 dark:text-gray-400">清除截止时间</button>
+											<button onclick={() => { projectStore.setDeadline(project.id, null); deadlineInputs[project.id] = ''; }} class="rounded-lg border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-500 hover:border-gray-400 hover:text-gray-700 dark:border-gray-600 dark:text-gray-400 dark:hover:text-gray-200">清除截止时间</button>
 										{/if}
 									</div>
 								</div>
 
 								<!-- Notes -->
 								<div>
-									<p class="mb-3 text-xs font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400">笔记</p>
+									<p class="mb-3 flex items-center gap-1.5 text-xs font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400">
+										<AnnotationOutline class="h-3.5 w-3.5" /> 笔记
+									</p>
 									<div class="mb-3 flex gap-2">
-										<input type="text" bind:value={noteInputs[project.id]} placeholder="添加笔记… (Enter 提交)" class="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white" onkeydown={(e) => { if (e.key === 'Enter') { e.preventDefault(); submitNote(project); } }} />
-										<button onclick={() => submitNote(project)} class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">添加</button>
+										<input type="text" bind:value={noteInputs[project.id]} placeholder="添加笔记… (Enter 提交)" class="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-200 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white" onkeydown={(e) => { if (e.key === 'Enter') { e.preventDefault(); submitNote(project); } }} />
+										<button onclick={() => submitNote(project)} class="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700">添加</button>
 									</div>
 									{#if project.notes.length === 0}
 										<p class="text-sm text-gray-400 italic dark:text-gray-600">暂无笔记</p>
@@ -348,7 +383,9 @@
 												<li class="flex items-start gap-3 rounded-lg bg-gray-50 px-3 py-2 text-sm dark:bg-gray-900">
 													<span class="flex-1 text-gray-700 dark:text-gray-300">{note.text}</span>
 													<span class="shrink-0 text-xs text-gray-400">{new Date(note.createdAt).toLocaleDateString('zh-CN')}</span>
-													<button onclick={() => projectStore.removeNote(project.id, note.id)} class="shrink-0 text-xs text-red-400 hover:text-red-600" title="删除笔记">✕</button>
+													<button onclick={() => projectStore.removeNote(project.id, note.id)} class="shrink-0 text-gray-400 hover:text-red-500 dark:hover:text-red-400" title="删除笔记">
+														<CloseOutline class="h-3.5 w-3.5" />
+													</button>
 												</li>
 											{/each}
 										</ul>

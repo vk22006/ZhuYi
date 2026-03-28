@@ -109,8 +109,8 @@
 			};
 		return {
 			text: formatDeadline(p.deadline),
-			bg: 'bg-blue-50 dark:bg-blue-900/20',
-			text_: 'text-blue-700 dark:text-blue-400'
+			bg: 'bg-primary-50 dark:bg-primary-900/20',
+			text_: 'text-primary-700 dark:text-primary-400'
 		};
 	}
 
@@ -147,7 +147,7 @@
 	// ── Stat cards config ──────────────────────────────────────────────────────
 	const statCards = $derived([
 		{ label: '全部项目', value: stats.total, icon: '📁', color: 'text-gray-700 dark:text-gray-300', bg: 'bg-gray-50 dark:bg-gray-800', border: 'border-gray-200 dark:border-gray-700' },
-		{ label: '进行中', value: stats.active, icon: '🚀', color: 'text-blue-700 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-blue-200 dark:border-blue-800' },
+		{ label: '进行中', value: stats.active, icon: '🚀', color: 'text-primary-700 dark:text-primary-400', bg: 'bg-primary-50 dark:bg-primary-900/20', border: 'border-primary-200 dark:border-primary-800' },
 		{ label: '已完成', value: stats.completed, icon: '✅', color: 'text-green-700 dark:text-green-400', bg: 'bg-green-50 dark:bg-green-900/20', border: 'border-green-200 dark:border-green-800' },
 		{ label: '已过期', value: stats.overdue, icon: '🔴', color: 'text-red-700 dark:text-red-400', bg: 'bg-red-50 dark:bg-red-900/20', border: 'border-red-200 dark:border-red-800' }
 	]);
@@ -181,11 +181,11 @@
 		<div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
 			<div class="mb-3 flex items-center justify-between">
 				<span class="text-sm font-semibold text-gray-700 dark:text-gray-300">项目完成进度</span>
-				<span class="text-lg font-bold text-blue-600 dark:text-blue-400">{completionPct}%</span>
+				<span class="text-lg font-bold text-primary-600 dark:text-primary-400">{completionPct}%</span>
 			</div>
 			<div class="relative h-4 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
 				<div
-					class="h-full rounded-full bg-gradient-to-r from-blue-500 to-green-500 transition-all duration-700"
+					class="h-full rounded-full bg-gradient-to-r from-primary-500 to-rose-500 transition-all duration-700"
 					style="width: {completionPct}%"
 					role="progressbar"
 					aria-valuenow={completionPct}
@@ -195,7 +195,7 @@
 				></div>
 			</div>
 			<div class="mt-4 flex flex-wrap gap-2">
-				<span class="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">进行中 {stats.active}</span>
+				<span class="rounded-full bg-primary-100 px-3 py-1 text-xs font-medium text-primary-700 dark:bg-primary-900/30 dark:text-primary-400">进行中 {stats.active}</span>
 				<span class="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700 dark:bg-green-900/30 dark:text-green-400">已完成 {stats.completed}</span>
 				<span class="rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-700 dark:bg-red-900/30 dark:text-red-400">已过期 {stats.overdue}</span>
 				<span class="rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">即将到期 {stats.dueSoon}</span>
@@ -212,16 +212,16 @@
 					{#each upcoming as project (project.id)}
 						{@const badge = getDeadlineBadge(project)}
 						<li class="flex flex-wrap items-center gap-3 px-5 py-3">
-							<a href="/ProjectTracker" class="min-w-0 flex-1 truncate text-sm font-medium text-gray-800 hover:text-blue-600 dark:text-gray-200 dark:hover:text-blue-400" aria-label="跳转到项目：{project.title}">{project.title}</a>
+							<a href="/ProjectTracker" class="min-w-0 flex-1 truncate text-sm font-medium text-gray-800 hover:text-primary-600 dark:text-gray-200 dark:hover:text-primary-400" aria-label="跳转到项目：{project.title}">{project.title}</a>
 							{#if badge}
 								<span class="shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold {badge.bg} {badge.text_}">{badge.text}</span>
 							{/if}
 							<span class="shrink-0 text-xs text-gray-400 dark:text-gray-500" aria-label="{project.notes.length} 条笔记">📝 {project.notes.length}</span>
-							<button onclick={() => toggleNoteInput(project.id)} class="shrink-0 rounded-md border border-gray-200 px-2 py-0.5 text-xs text-gray-500 hover:border-blue-400 hover:text-blue-600 dark:border-gray-600 dark:text-gray-400" aria-label="为 {project.title} 添加笔记">+ 笔记</button>
+							<button onclick={() => toggleNoteInput(project.id)} class="shrink-0 rounded-md border border-gray-200 px-2 py-0.5 text-xs text-gray-500 hover:border-primary-400 hover:text-primary-600 dark:border-gray-600 dark:text-gray-400" aria-label="为 {project.title} 添加笔记">+ 笔记</button>
 							{#if noteInputVisible[project.id]}
 								<div class="mt-1 flex w-full gap-2">
-									<input type="text" bind:value={noteInputValues[project.id]} placeholder="输入笔记… Enter 提交，Esc 取消" class="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none dark:border-gray-600 dark:bg-gray-900 dark:text-white" onkeydown={(e) => { if (e.key === 'Enter') { e.preventDefault(); submitNote(project); } if (e.key === 'Escape') toggleNoteInput(project.id); }} />
-									<button onclick={() => submitNote(project)} class="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700" aria-label="提交笔记">添加</button>
+									<input type="text" bind:value={noteInputValues[project.id]} placeholder="输入笔记… Enter 提交，Esc 取消" class="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-200 focus:outline-none dark:border-gray-600 dark:bg-gray-900 dark:text-white" onkeydown={(e) => { if (e.key === 'Enter') { e.preventDefault(); submitNote(project); } if (e.key === 'Escape') toggleNoteInput(project.id); }} />
+									<button onclick={() => submitNote(project)} class="rounded-lg bg-primary-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-primary-700" aria-label="提交笔记">添加</button>
 								</div>
 							{/if}
 						</li>
@@ -236,7 +236,7 @@
 				{#each ['all', 'active', 'completed', 'overdue'] as const as f}
 					<button
 						onclick={() => (filter = f)}
-						class="rounded-md px-3 py-1.5 text-xs font-medium transition-colors {filter === f ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700'}"
+						class="rounded-md px-3 py-1.5 text-xs font-medium transition-colors {filter === f ? 'bg-primary-600 text-white shadow-sm' : 'text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700'}"
 						aria-pressed={filter === f}
 					>
 						{f === 'all' ? '全部' : f === 'active' ? '进行中' : f === 'completed' ? '已完成' : '已过期'}
@@ -292,15 +292,15 @@
 							<div class="mb-1 flex items-center gap-2">
 								<span class="text-xs text-gray-400 dark:text-gray-500">笔记</span>
 								<div class="flex-1 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-700" style="height:4px">
-									<div class="h-full rounded-full bg-blue-500" style="width: {project.notes.length > 0 ? Math.min(project.notes.length * 20, 100) : 0}%"></div>
+									<div class="h-full rounded-full bg-primary-500" style="width: {project.notes.length > 0 ? Math.min(project.notes.length * 20, 100) : 0}%"></div>
 								</div>
 								<span class="text-xs text-gray-400 dark:text-gray-500">{project.notes.length}</span>
 							</div>
 
 							{#if noteInputVisible[project.id]}
 								<div class="mt-2 flex gap-1">
-									<input type="text" bind:value={noteInputValues[project.id]} placeholder="笔记… Enter 提交" class="flex-1 rounded-lg border border-gray-300 bg-white px-2 py-1 text-xs focus:border-blue-500 focus:ring-1 focus:ring-blue-200 focus:outline-none dark:border-gray-600 dark:bg-gray-900 dark:text-white" onkeydown={(e) => { if (e.key === 'Enter') { e.preventDefault(); submitNote(project); } if (e.key === 'Escape') toggleNoteInput(project.id); }} />
-									<button onclick={() => submitNote(project)} class="rounded-lg bg-blue-600 px-2 py-1 text-xs font-medium text-white hover:bg-blue-700" aria-label="提交笔记">↵</button>
+									<input type="text" bind:value={noteInputValues[project.id]} placeholder="笔记… Enter 提交" class="flex-1 rounded-lg border border-gray-300 bg-white px-2 py-1 text-xs focus:border-primary-500 focus:ring-1 focus:ring-primary-200 focus:outline-none dark:border-gray-600 dark:bg-gray-900 dark:text-white" onkeydown={(e) => { if (e.key === 'Enter') { e.preventDefault(); submitNote(project); } if (e.key === 'Escape') toggleNoteInput(project.id); }} />
+									<button onclick={() => submitNote(project)} class="rounded-lg bg-primary-600 px-2 py-1 text-xs font-medium text-white hover:bg-primary-700" aria-label="提交笔记">↵</button>
 								</div>
 							{/if}
 						</div>
@@ -310,8 +310,8 @@
 							<button onclick={() => projectStore.toggleStatus(project.id)} class="rounded-md border px-2 py-1 text-xs font-medium transition-colors {project.status === 'completed' ? 'border-green-300 text-green-600 hover:bg-green-50 dark:border-green-700 dark:text-green-400' : 'border-gray-200 text-gray-500 hover:border-green-400 hover:text-green-600 dark:border-gray-600 dark:text-gray-400'}" aria-label="{project.status === 'completed' ? '标记为进行中' : '标记为已完成'}: {project.title}">
 								{project.status === 'completed' ? '↺' : '✓'}
 							</button>
-							<button onclick={() => toggleNoteInput(project.id)} class="rounded-md border border-gray-200 px-2 py-1 text-xs font-medium text-gray-500 hover:border-blue-400 hover:text-blue-600 dark:border-gray-600 dark:text-gray-400" aria-label="为 {project.title} 添加笔记">📝</button>
-							<a href="/ProjectTracker" class="ml-auto rounded-md border border-gray-200 px-2 py-1 text-xs font-medium text-gray-500 hover:border-blue-400 hover:text-blue-600 dark:border-gray-600 dark:text-gray-400" aria-label="在项目追踪页打开: {project.title}">→</a>
+							<button onclick={() => toggleNoteInput(project.id)} class="rounded-md border border-gray-200 px-2 py-1 text-xs font-medium text-gray-500 hover:border-primary-400 hover:text-primary-600 dark:border-gray-600 dark:text-gray-400" aria-label="为 {project.title} 添加笔记">📝</button>
+							<a href="/ProjectTracker" class="ml-auto rounded-md border border-gray-200 px-2 py-1 text-xs font-medium text-gray-500 hover:border-primary-400 hover:text-primary-600 dark:border-gray-600 dark:text-gray-400" aria-label="在项目追踪页打开: {project.title}">→</a>
 							<button onclick={() => { if (confirm(`确定要删除"${project.title}"吗？`)) { projectStore.removeProject(project.id); } }} class="rounded-md border border-gray-200 px-2 py-1 text-xs font-medium text-red-400 hover:border-red-400 hover:bg-red-50 dark:border-gray-600 dark:text-red-500" aria-label="删除项目: {project.title}">✕</button>
 						</div>
 					</div>
@@ -320,7 +320,7 @@
 
 			{#if filteredProjects.length > MAX_CARDS}
 				<p class="text-center text-xs text-gray-400 dark:text-gray-600">
-					只显示前 {MAX_CARDS} 个项目，共 {filteredProjects.length} 个。前往 <a href="/ProjectTracker" class="text-blue-500 hover:underline">项目追踪</a> 查看全部。
+					只显示前 {MAX_CARDS} 个项目，共 {filteredProjects.length} 个。前往 <a href="/ProjectTracker" class="text-primary-500 hover:underline">项目追踪</a> 查看全部。
 				</p>
 			{/if}
 		{/if}
