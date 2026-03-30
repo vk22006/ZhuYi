@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "ZhuYi",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "identifier": "com.vk22006.zhuyi",
   "build": {
     "frontendDist": "../build",
@@ -12,13 +12,31 @@
   "app": {
     "windows": [
       {
+        "label": "splash",
         "title": "逐一",
+        "url": "splash",
+        "width": 900,
+        "height": 560,
+        "resizable": false,
+        "decorations": false,
+        "alwaysOnTop": true,
+        "center": true,
+        "visible": true,
+        "skipTaskbar": true,
+        "shadow": true
+      },
+      {
+        "label": "main",
+        "title": "逐一",
+        "url": "/",
         "width": 1024,
         "height": 720,
         "minWidth": 768,
         "minHeight": 560,
         "resizable": true,
-        "fullscreen": false
+        "fullscreen": false,
+        "visible": false,
+        "center": true
       }
     ],
     "security": {
