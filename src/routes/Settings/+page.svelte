@@ -4,6 +4,13 @@
 	import { page } from '$app/stores';
 	import { settingsStore, type Theme, type FontSize } from '$lib/settingsStore';
 	import { onMount } from 'svelte';
+	import {
+		PaletteOutline,
+		TextSizeOutline,
+		RefreshOutline,
+		SunOutline,
+		MoonOutline
+	} from 'flowbite-svelte-icons';
 
 	let activeUrl = $derived($page.url.pathname);
 	let settings = $derived($settingsStore);
@@ -12,9 +19,9 @@
 		settingsStore.init();
 	});
 
-	const themes: { value: Theme; label: string; icon: string; desc: string }[] = [
-		{ value: 'light', label: '浅色', icon: '☀️', desc: '明亮的界面，适合日间使用' },
-		{ value: 'dark', label: '深色', icon: '🌙', desc: '护眼深色模式，适合夜间使用' }
+	const themes: { value: Theme; label: string; icon: any; desc: string }[] = [
+		{ value: 'light', label: '浅色', icon: SunOutline, desc: '明亮的界面，适合日间使用' },
+		{ value: 'dark', label: '深色', icon: MoonOutline, desc: '护眼深色模式，适合夜间使用' }
 	];
 
 	const fontSizes: { value: FontSize; label: string; sample: string; desc: string }[] = [
@@ -45,7 +52,7 @@
 			class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800"
 		>
 			<div class="mb-1 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
-				<span>🎨</span>
+				<PaletteOutline class="h-5 w-5 text-gray-500 dark:text-gray-400" />
 				<span>主题</span>
 			</div>
 			<p class="mb-4 text-sm text-gray-500 dark:text-gray-400">
@@ -54,6 +61,7 @@
 
 			<div class="grid grid-cols-2 gap-3">
 				{#each themes as t}
+					{@const Icon = t.icon}
 					<button
 						type="button"
 						onclick={() => settingsStore.setTheme(t.value)}
@@ -63,7 +71,9 @@
 							? 'border-primary-500 bg-primary-50 dark:border-primary-400 dark:bg-primary-900/20'
 							: 'border-gray-200 bg-gray-50 hover:border-gray-300 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:hover:border-gray-600 dark:hover:bg-gray-700'}"
 					>
-						<span class="text-3xl">{t.icon}</span>
+						<div class="text-primary-600 dark:text-primary-400">
+							<Icon class="h-8 w-8" />
+						</div>
 						<span
 							class="font-medium {settings.theme === t.value
 								? 'text-primary-700 dark:text-primary-300'
@@ -94,7 +104,7 @@
 			class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800"
 		>
 			<div class="mb-1 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
-				<span>🔠</span>
+				<TextSizeOutline class="h-5 w-5 text-gray-500 dark:text-gray-400" />
 				<span>字体大小</span>
 			</div>
 			<p class="mb-4 text-sm text-gray-500 dark:text-gray-400">
@@ -163,7 +173,7 @@
 			class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800"
 		>
 			<div class="mb-1 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
-				<span>↩️</span>
+				<RefreshOutline class="h-5 w-5 text-gray-500 dark:text-gray-400" />
 				<span>重置设置</span>
 			</div>
 			<p class="mb-4 text-sm text-gray-500 dark:text-gray-400">
