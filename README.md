@@ -2,7 +2,7 @@
 
 ![GitHub top language](https://img.shields.io/github/languages/top/vk22006/OneThing)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Version](https://img.shields.io/badge/version-v1.1.0-orange.svg)
+![Version](https://img.shields.io/badge/version-v1.1.1-orange.svg)
 
 ---
 
@@ -61,7 +61,8 @@
 
 ## 项目现状 & 版本说明
 
-* **v1.1.0 (Current)**: 实现了从存储层到表现层的全面升级。引入了 IndexedDB 大容量存储，重绘了 UI 视觉稿，并完成了全量图标的 SVG 化。
+* **v1.1.1 (Current)**: 引入了全新的启动屏 UI，优化了应用启动流程，并正式将软件内的品牌标识更新为中文“逐一”。
+* **v1.1.0**: 实现了从存储层到表现层的全面升级。引入了 IndexedDB 大容量存储，重绘了 UI 视觉稿，并完成了全量图标的 SVG 化。
 * **v1.0.0**: 初始稳定版，确立了 Todo/Project/Dashboard 三大核心模块及桌面通知功能。
 
 ## 未来开发计划
