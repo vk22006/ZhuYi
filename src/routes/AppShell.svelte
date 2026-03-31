@@ -41,6 +41,13 @@
 			class="h-full w-52"
 			classes={{ nonactive: 'p-2', active: 'p-2' }}
 		>
+			<div class="flex items-center justify-center px-4 pb-6">
+				<img
+					src="/assets/app_img/logo_full.png"
+					alt="ZhuYi Logo"
+					class="h-14 w-auto object-contain transition-opacity hover:opacity-90"
+				/>
+			</div>
 			<SidebarGroup>
 				<SidebarItem label="TODO清单" href="/" />
 				<SidebarItem label="你的项目" href="/ProjectTracker" />
@@ -51,7 +58,7 @@
 	</aside>
 
 	<!-- ── Main content ───────────────────────────────────────────────────── -->
-	<div class="flex min-w-0 flex-1 flex-col overflow-clip relative z-50">
+	<div class="relative z-50 flex min-w-0 flex-1 flex-col overflow-clip">
 		<!-- Top bar: sidebar toggle -->
 		<header
 			class="flex h-11 flex-shrink-0 items-center border-b border-gray-200 bg-white px-3 dark:border-gray-700 dark:bg-gray-800"
