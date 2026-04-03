@@ -1,8 +1,9 @@
 ![ZhuYi Title Banner](assets/header-dark.png) 
 
-![GitHub top language](https://img.shields.io/github/languages/top/vk22006/OneThing)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Version](https://img.shields.io/badge/version-v1.1.1-orange.svg)
+![GitHub top language](https://img.shields.io/github/languages/top/vk22006/ZhuYi)
+[![License](https://img.shields.io/github/license/vk22006/ZhuYi)](LICENSE)
+![Version](https://img.shields.io/github/v/release/vk22006/ZhuYi)
+
 
 ---
 
