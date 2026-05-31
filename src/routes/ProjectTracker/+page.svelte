@@ -21,7 +21,8 @@
 		TrashBinOutline,
 		ChevronUpOutline,
 		ChevronDownOutline,
-		ClockOutline
+		ClockOutline,
+		LockOutline
 	} from 'flowbite-svelte-icons';
 
 	let activeUrl = $derived($page.url.pathname);
@@ -36,17 +37,108 @@
 		return new Date(local).toISOString();
 	}
 
+	// ── Focus project logic ───────────────────────────────────────────────────
+	// focusProjectId tracks which project is currently the "active focus".
+	// Initially it is the first (oldest) project in the store.
+	// It is persisted in sessionStorage so it survives page navigation within
+	// the same session but resets on reload (intentionally lightweight).
+	let focusProjectId = $state<string | null>(null);
+
+	// Switch-focus dialog state
+	let switchDialogPending = $state<{ newProject: Project; currentProject: Project } | null>(null);
+
+	// Projects sorted by creation time (ascending) — oldest first
+	let sortedByCreation = $derived(
+		[...$projectStore].sort(
+			(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+		)
+	);
+
+	// On first load (or when store is hydrated), seed the focusProjectId
+	$effect(() => {
+		if (sortedByCreation.length > 0 && focusProjectId === null) {
+			focusProjectId = sortedByCreation[0].id;
+		}
+		// If the focused project was deleted, fall back to the oldest remaining
+		if (
+			focusProjectId !== null &&
+			!sortedByCreation.find((p) => p.id === focusProjectId)
+		) {
+			focusProjectId = sortedByCreation[0]?.id ?? null;
+		}
+	});
+
+	// Derived: the project we are currently focused on
+	let focusProject = $derived(
+		sortedByCreation.find((p) => p.id === focusProjectId) ?? null
+	);
+
+	// Whether the multi-project focus banner should show
+	let showFocusBanner = $derived($projectStore.length > 1);
+
+	function isDisabled(project: Project): boolean {
+		if ($projectStore.length <= 1) return false;
+		return project.id !== focusProjectId;
+	}
+
+	// Called after addProject; checks if the newly created project has a sooner deadline
+	function checkDeadlineSwitchPrompt(newProject: Project) {
+		if (!focusProject) return;
+		if (!newProject.deadline) return; // New project has no deadline → no reason to switch
+		const newDeadlineMs = new Date(newProject.deadline).getTime();
+		const currentDeadlineMs = focusProject.deadline
+			? new Date(focusProject.deadline).getTime()
+			: Infinity;
+		if (newDeadlineMs < currentDeadlineMs) {
+			switchDialogPending = { newProject, currentProject: focusProject };
+		}
+	}
+
 	function handleAddProject(e: Event) {
 		e.preventDefault();
 		if (!newTitle.trim()) return;
+
+		// Capture count before adding
+		const beforeCount = $projectStore.length;
+
 		projectStore.addProject({
 			title: newTitle.trim(),
 			description: newDesc.trim() || undefined,
 			deadline: localToISO(newDeadline)
 		});
+
+		// After addProject the store updates reactively; we need the new project object.
+		// We use a microtask to let the store settle first.
+		const capturedTitle = newTitle.trim();
+		const capturedDeadline = localToISO(newDeadline);
+
 		newTitle = '';
 		newDesc = '';
 		newDeadline = '';
+
+		// Only check for switch if we already had at least one project
+		if (beforeCount >= 1 && capturedDeadline) {
+			// The new project will have been pushed to the store; find it by title + deadline
+			setTimeout(() => {
+				const newest = [...$projectStore].sort(
+					(a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+				)[0];
+				if (newest && newest.title === capturedTitle && newest.deadline === capturedDeadline) {
+					checkDeadlineSwitchPrompt(newest);
+				}
+			}, 0);
+		}
+	}
+
+	function confirmSwitch() {
+		if (switchDialogPending) {
+			focusProjectId = switchDialogPending.newProject.id;
+		}
+		switchDialogPending = null;
+	}
+
+	function declineSwitch() {
+		switchDialogPending = null;
 	}
 
 	// ── Filter & sort state ───────────────────────────────────────────────────
@@ -136,6 +228,7 @@
 	}
 
 	function cardBorder(p: Project): string {
+		if (isDisabled(p)) return 'border-gray-200 dark:border-gray-700';
 		if (p.status === 'completed') return 'border-gray-200 dark:border-gray-700';
 		if (isOverdue(p)) return 'border-red-500 dark:border-red-500';
 		if (isDueSoon(p)) return 'border-amber-400 dark:border-amber-400';
@@ -185,6 +278,13 @@
 			onsubmit={handleAddProject}
 			class="rounded-xl border border-gray-200 bg-gray-50 p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
 		>
+			<!-- Focus banner — shown only when multiple projects exist -->
+			{#if showFocusBanner}
+				<div class="mb-4 flex items-center justify-center rounded-lg bg-amber-50 px-4 py-2.5 text-center text-sm font-semibold text-amber-700 ring-1 ring-amber-200 dark:bg-amber-900/20 dark:text-amber-300 dark:ring-amber-700/50">
+					让我们一次只专注于一个项目！
+				</div>
+			{/if}
+
 			<h2 class="mb-3 text-sm font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400">
 				新建项目
 			</h2>
@@ -232,6 +332,37 @@
 			</div>
 		</form>
 
+		<!-- Switch-focus dialog -->
+		{#if switchDialogPending}
+			<div
+				class="rounded-xl border border-amber-300 bg-amber-50 p-5 shadow-md dark:border-amber-700 dark:bg-amber-900/20"
+				role="alertdialog"
+				aria-modal="true"
+				aria-labelledby="switch-dialog-title"
+			>
+				<p id="switch-dialog-title" class="mb-1 font-semibold text-amber-800 dark:text-amber-200">
+					新项目截止更早！
+				</p>
+				<p class="mb-4 text-sm text-amber-700 dark:text-amber-300">
+					「{switchDialogPending.newProject.title}」的截止时间比当前聚焦项目「{switchDialogPending.currentProject.title}」更早。要将专注切换到新项目吗？
+				</p>
+				<div class="flex gap-3">
+					<button
+						onclick={confirmSwitch}
+						class="flex items-center gap-1.5 rounded-lg bg-amber-600 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-700"
+					>
+						<CheckOutline class="h-4 w-4" /> 是，切换专注
+					</button>
+					<button
+						onclick={declineSwitch}
+						class="flex items-center gap-1.5 rounded-lg border border-amber-300 px-4 py-2 text-sm font-medium text-amber-700 hover:bg-amber-100 dark:border-amber-600 dark:text-amber-300 dark:hover:bg-amber-900/40"
+					>
+						<CloseOutline class="h-4 w-4" /> 否，保持原项目
+					</button>
+				</div>
+			</div>
+		{/if}
+
 		<!-- Filter + Sort toolbar -->
 		<div class="flex flex-wrap items-center justify-between gap-3">
 			<div class="flex gap-1 rounded-lg border border-gray-200 bg-white p-1 dark:border-gray-700 dark:bg-gray-800">
@@ -271,18 +402,27 @@
 					{@const label = deadlineLabel(project)}
 					{@const isExpanded = expandedId === project.id}
 					{@const isEditing = editingId === project.id}
+					{@const disabled = isDisabled(project)}
 					<li
-						class="rounded-xl border-2 bg-white shadow-sm transition-all dark:bg-gray-800 {cardBorder(project)} {project.status === 'completed' ? 'opacity-70' : ''}"
+						class="rounded-xl border-2 bg-white shadow-sm transition-all dark:bg-gray-800 {cardBorder(project)} {project.status === 'completed' ? 'opacity-70' : ''} {disabled ? 'opacity-50 grayscale' : ''}"
 					>
+						<!-- Locked overlay label -->
+						{#if disabled}
+							<div class="flex items-center gap-2 rounded-t-xl border-b border-gray-100 bg-gray-50 px-4 py-2 dark:border-gray-700 dark:bg-gray-900/60">
+								<LockOutline class="h-3.5 w-3.5 text-gray-400 dark:text-gray-500" />
+								<span class="text-xs font-medium text-gray-400 dark:text-gray-500">当前已锁定 · 专注完成当前项目后可访问</span>
+							</div>
+						{/if}
+
 						<!-- Card header -->
 						<!-- svelte-ignore a11y_click_events_have_key_events -->
 						<!-- svelte-ignore a11y_no_noninteractive_element_to_interactive_role -->
 						<div
-							class="cursor-pointer p-4 select-none"
+							class="p-4 select-none {disabled ? 'cursor-not-allowed' : 'cursor-pointer'}"
 							role="button"
-							tabindex="0"
-							onclick={() => { if (!isEditing) { toggleExpand(project.id); initDeadlineInput(project); } }}
-							onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (!isEditing) { toggleExpand(project.id); initDeadlineInput(project); } } }}
+							tabindex={disabled ? -1 : 0}
+							onclick={() => { if (!isEditing && !disabled) { toggleExpand(project.id); initDeadlineInput(project); } }}
+							onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (!isEditing && !disabled) { toggleExpand(project.id); initDeadlineInput(project); } } }}
 						>
 							<div class="flex items-start justify-between gap-4">
 								<!-- Title / edit form -->
@@ -322,8 +462,8 @@
 								{/if}
 							</div>
 
-							<!-- Action buttons row -->
-							{#if !isEditing}
+							<!-- Action buttons row — hidden for disabled (locked) projects -->
+							{#if !isEditing && !disabled}
 								<div class="mt-3 flex flex-wrap gap-2" onclick={(e) => e.stopPropagation()} role="presentation">
 									<button onclick={(e) => { e.stopPropagation(); startEdit(project); expandedId = project.id; }} class="flex items-center gap-1 rounded-md border border-gray-200 px-2.5 py-1 text-xs font-medium text-gray-600 hover:border-primary-400 hover:text-primary-600 dark:border-gray-600 dark:text-gray-400 dark:hover:border-primary-500 dark:hover:text-primary-400">
 										<EditOutline class="h-3 w-3" /> 编辑
@@ -345,8 +485,8 @@
 							{/if}
 						</div>
 
-						<!-- Expanded detail panel -->
-						{#if isExpanded && !isEditing}
+						<!-- Expanded detail panel — only for non-disabled projects -->
+						{#if isExpanded && !isEditing && !disabled}
 							<div class="border-t border-gray-100 px-4 pt-4 pb-4 dark:border-gray-700">
 								{#if project.description}
 									<p class="mb-4 text-sm text-gray-600 dark:text-gray-400">{project.description}</p>
