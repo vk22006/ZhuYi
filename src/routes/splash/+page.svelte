@@ -104,7 +104,7 @@
 		<h1 class="splash-title">逐一</h1>
 
 		<!-- Version -->
-		<p class="splash-version">Version 1.1.1</p>
+		<p class="splash-version">Version 1.1.3</p>
 	</div>
 </div>
 

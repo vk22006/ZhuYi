@@ -1,6 +1,6 @@
 [package]
 name = "zhuyi"
-version = "1.1.2"
+version = "1.1.3"
 description = "ZhuYi – task and project tracking desktop app"
 authors = ["vk22006"]
 license = "MIT"
